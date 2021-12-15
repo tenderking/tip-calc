@@ -29,7 +29,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--c-Dark-grayish-cyan-2);
+    background-color: var(--c-Light-grayish-cyan);
     
    }
    h1{

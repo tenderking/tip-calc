@@ -1,73 +1,194 @@
 <template>
   <main>
-      <section class="left-side">
-<form >
-    <h3>Bill</h3>
-    <input type="text"> 
-    <h3>Select Tip %</h3>
-    <div class="tip-percent-buttons">
-        <button>5%</button>
-        <button>10%</button>
-        <button>15%</button>
-        <button>25%</button>
-        <button>50%</button>
-        <input type="text">
-    </div>
-    <h3>Number of People</h3>
-    <input type="text">
-</form>
-      </section>
-      <section class="right-side">
-<div class="tip-amount">
-    <div class="tip-amount-text"> 
-        <h3>Tip Amount</h3>
-        <p>/ person</p>
-        </div>
-        <h2>{{tipAmount}}</h2>
+    <section class="left-side">
+      <form>
+        <h3>Bill</h3>
+        <input class="bill-input" type="number" @change="handleChange"  v-model="bill" placeholder="enter bill" />
+        <h3>Select Tip %</h3>
+        <div class="tip-percent-buttons" >
+          <div  class="percent-btn" v-for="tip in tips" :key="tip.id" @click="tipPercentageValue(ourValue)" :value="tip.percent">
+            {{ tip.percent }}%
+          </div>
 
-</div>
-<div class="total-amount">
-    <div class="total-amount-text"> 
-        <h3>Total</h3>
-        <p>/ person</p>
+          <input type="text" />
         </div>
-        <h2>{{total}}</h2>
-        
-</div>
-<div class="reset-btn">
-    <h4>Reset</h4>
-</div>
-      </section>
+        <h3>Number of People</h3>
+        <input class="nr-people-input" type="text" />
+      </form>
+    </section>
+    <section class="right-side">
+      
+      <div class="amount">
+        <div class="tip-amount-text">
+          <h3>Tip Amount</h3>
+          <p>/ person</p>
+        </div>
+        <h2>{{ tipAmount }}</h2>
+      </div>
+      <div class="amount">
+        <div class="total-amount-text">
+          <h3>Total</h3>
+          <p>/ person</p>
+        </div>
+        <h2 class="total">{{total }}</h2>
+      </div>
+      <div class="reset-btn">
+        <h4>Reset</h4>
+      </div>
+    </section>
   </main>
 </template>
 
+
 <script lang="ts" setup>
-const total=0.00
-const tipAmount=0.00
+import {computed, ref, defineComponent} from 'vue'
+let tips = [
+  { id: 1, percent: 5},
+  { id: 2, percent: 10},
+  { id: 3, percent: 15},
+  { id: 4, percent: 25},
+  { id: 5, percent: 50},
+]
+ const bill  = ref(0)
+ const ourValue = ref()
+ const percentValue =ref(0)
+let  tipPercentageValue = () => { ourValue.value
+
+  console.log(ourValue.value)
+}
+let totalBill =(computed)
+// const total:number = 2 + tipPercentageValue(percentValue);
+
+const tipAmount = 0.0;
+const numOfPeople = ref('');
+
+    
+
 
 </script>
 
 <style>
+main {
+  width: 60rem;
+  height: auto;
+  background-color: var(--c-White);
+  display: flex;
+  border-radius: 10px;
+}
+.left-side,
+.right-side {
+  width: 50%;
+  padding: 1em;
+}
+h3 {
+  color: var(--c-Dark-grayish-cyan);
+}
+.right-side {
+    padding-top:2em;
+  background: var(--c-very-dark-cyan);
+  border-radius: 10px;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content:center;
+}
+.tip-percent-buttons{
+    display: grid;
+    grid-template-columns:100px 100px 100px;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
 
-   main{
-       width: 60rem;
-       height: auto;
-       background-color:var(--c-White);
-       display: flex;
-       border-radius: 10px;
-   }
-   .left-side, .right-side{
-     
-     width:50%;
-     padding: 1em;
-     }
-     h3{
-         color: var(--c-Dark-grayish-cyan);
-     }
-     .right-side{
-         background: var(--c-very-dark-cyan);
-         border-radius: 10px;
-         margin:2rem
-     }
+}
 
+.percent-btn{
+
+    background-color:var(--c-very-dark-cyan);
+    color: var(--c-White);
+    padding: 0.5rem;
+    border-radius:5px;
+   
+
+
+}
+.percent-btn:hover,.percent-btn:focus{
+    background-color:var(--c-cyan);
+    color: var(--c-very-dark-cyan);
+
+}
+
+input{
+    background-color: var(--c-Light-grayish-cyan-2);
+    height:52;
+    border-radius:5px;
+    border: 0;
+    font: inherit;
+       padding-block: 0.5rem;
+       text-align: right;
+       font-size:smaller;
+       
+}
+.bill-input{
+  background-image: url(src/assets/icon-dollar.svg);
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position:left center;
+  padding-inline: 1em;
+  background-position-x: 5%;
+
+}
+.nr-people-input{
+  background-image: url(src/assets/icon-person.svg);
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position:left center;
+  padding-inline: 1em;
+  background-position-x: 5%;
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+h3,p{
+    font-size: smaller;
+}
+p{
+    color: var(--c-Dark-grayish-cyan);
+    font-weight: bold;
+}
+h2{
+    color: var(--c-cyan);
+  
+
+}
+.amount{
+    display: flex;
+    justify-content:space-between;
+    line-height: 0;
+}
+.amount * h3{
+    color:var(--c-White);
+}
+.total{
+    font-size:smaller;
+    line-height: 1em;
+}
+.reset-btn{
+  background-color: var(--c-cyan);
+  color: var(--c-very-dark-cyan);
+  width: 60%;
+  border-radius: 5px;
+   padding: 0.5rem;
+   line-height: 0;
+   text-align: center;
+}
 </style>
