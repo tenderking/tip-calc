@@ -3,17 +3,17 @@
     <section class="left-side">
       <form>
         <h3>Bill</h3>
-        <input class="bill-input" type="number" @change="handleChange"  v-model="bill" placeholder="enter bill" />
+        <input class="bill-input" type="number"   v-model="bill" placeholder="enter bill" />
         <h3>Select Tip %</h3>
         <div class="tip-percent-buttons" >
-          <div  class="percent-btn" v-for="tip in tips" :key="tip.id" @click="tipPercentageValue(ourValue)" :value="tip.percent">
+          <div  class="percent-btn" v-for="tip in tips" :key="tip.id" @click="tipPercentageValue(tip.percent)" :value="tip.percent">
             {{ tip.percent }}%
           </div>
 
           <input type="text" />
         </div>
         <h3>Number of People</h3>
-        <input class="nr-people-input" type="text" />
+        <input class="nr-people-input" type="text"  v-model="numOfPeople"/>
       </form>
     </section>
     <section class="right-side">
@@ -50,19 +50,25 @@ let tips = [
   { id: 5, percent: 50},
 ]
  const bill  = ref(0)
- const ourValue = ref()
- const percentValue =ref(0)
-let  tipPercentageValue = () => { ourValue.value
+ const selectedTip = ref(0)
+ const total=ref(0)
+ const numOfPeople = ref(0);
+ const tipAmount = ref(0);
+ const computedPercantage = computed(() => selectedTip.value/100)
+ const tipPercentageValue=(percentage: number)=>{
+   selectedTip.value=percentage
+   total.value =(bill.value + bill.value*computedPercantage.value)/numOfPeople.value
+   tipAmount.value=bill.value*computedPercantage.value/numOfPeople.value
+   console.log(selectedTip.value)
+   console.log(total.value)}
 
-  console.log(ourValue.value)
-}
-let totalBill =(computed)
-// const total:number = 2 + tipPercentageValue(percentValue);
+ 
 
-const tipAmount = 0.0;
-const numOfPeople = ref('');
 
-    
+
+
+
+   
 
 
 </script>
