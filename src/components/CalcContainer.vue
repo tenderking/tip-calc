@@ -4,9 +4,9 @@
       <form>
         <h3>Bill</h3>
         <input
-          class="bill-input"
+          class="bill-input big-input"
           type="number"
-          @focus="$event.target.select()"
+         
           v-model="bill"
           placeholder="enter bill"
         />
@@ -32,7 +32,7 @@
         </div>
         <h3>Number of People</h3>
         <input
-          class="nr-people-input"
+          class="nr-people-input big-input"
           type="number"
           min="1"
           max="50"
@@ -192,6 +192,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+ .big-input{
+    width: 75%;
+  }
 
 /* Firefox */
 input[type="number"] {
@@ -229,5 +232,38 @@ h2 {
   padding: 0.5rem;
   line-height: 0;
   text-align: center;
+}
+@media screen and (max-width: 900px) {
+  main{
+    flex-direction: column;
+   margin: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+  }
+.tip-percent-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+.right-side{
+  width: 100%;
+  padding:0;
+  margin:0; 
+  padding-bottom: 2em;
+}
+.right-side>*{
+  padding-inline: 1em;
+}
+.reset-btn{margin-left: 1em;
+width: 85%;}
+  section.left-side{
+    width: 85%;
+  }
+  .big-input{
+    width: 90%;
+  }
 }
 </style>

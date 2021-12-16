@@ -36,4 +36,10 @@ body{
     color:var(--c-very-dark-cyan);
     text-align: center;
     }
+@media screen and (max-width:900px) {
+  #app{
+    width:100vw;
+
+  }
+}
 </style>
