@@ -6,7 +6,7 @@
         <input
           class="bill-input big-input"
           type="number"
-         
+         @change="handleChange"
           v-model="bill"
           placeholder="enter bill"
         />
@@ -26,6 +26,7 @@
             type="number"
             
             v-model="customTip"
+            @change="handleChange"
             min="1"
             max="5000"
           />
@@ -36,7 +37,7 @@
           type="number"
           min="1"
           max="50"
-          @change="giveResults"
+         @change="handleChange"
           v-model="numOfPeople"
           required="true"
         />
@@ -89,19 +90,31 @@ const tipAmount = ref(0);
 const totalString = ref("");
 const tipAmountString = ref("");
 
-const computedPercantage = computed(() => 
- 
-    selectedTip.value / 100
-  );
 
-
+const handleChange=()=>{
+  if(customTip.value===0){
+    giveResults(selectedTip.value)
+    console.log('tip is' + selectedTip.value)
+  }
+    giveResults(customTip.value/100)
+    console.log('custom tip is' + selectedTip.value)
+  
+}
 const tipPercentageValue = (percentage: number) => {
-  selectedTip.value = percentage;
+  selectedTip.value = percentage/100;
+  giveResults(selectedTip.value)
+  customTip.value=0
 };
-const giveResults = () => {
+const giveResults = (e:number) => {
+  if(e===0){ totalString.value = (0).toFixed(2);
+  tipAmountString.value = (0).toFixed(2);
+   return}
+    if(numOfPeople.value===0){ totalString.value = (0).toFixed(2);
+  tipAmountString.value = (0).toFixed(2);
+   return}
   total.value =
-    (bill.value + bill.value * computedPercantage.value) / numOfPeople.value;
-  tipAmount.value = (bill.value * computedPercantage.value) / numOfPeople.value;
+    (bill.value + bill.value * e) / numOfPeople.value;
+  tipAmount.value = (bill.value * e) / numOfPeople.value;
   tipAmountString.value = tipAmount.value.toFixed(2);
   totalString.value = total.value.toFixed(2);
 };
@@ -110,8 +123,8 @@ const resetValues = () => {
   selectedTip.value = 0;
   total.value = 0;
   tipAmount.value = 0;
-  giveResults();
-  console.log(computedPercantage.value)
+  giveResults(selectedTip.value);
+
 };
 </script>
 
@@ -227,11 +240,17 @@ h2 {
 .reset-btn {
   background-color: var(--c-cyan);
   color: var(--c-very-dark-cyan);
-  width: 60%;
+ margin: auto;
   border-radius: 5px;
   padding: 0.5rem;
   line-height: 0;
   text-align: center;
+  width: 95%;
+}
+h4{
+  padding: 1em 2em;
+  margin: 0;
+   
 }
 @media screen and (max-width: 900px) {
   main{
@@ -257,7 +276,7 @@ h2 {
 .right-side>*{
   padding-inline: 1em;
 }
-.reset-btn{margin-left: 1em;
+.reset-btn{margin:auto;
 width: 85%;}
   section.left-side{
     width: 85%;
